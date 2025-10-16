@@ -1,0 +1,74 @@
+/// <summary>
+/// Extension class for SalesTable to handle Broker ID business logic
+/// </summary>
+[ExtensionOf(tableStr(SalesTable))]
+final class SalesTable_BrokerExtension
+{
+    /// <summary>
+    /// Initializes the sales order from customer table
+    /// Copies the Broker ID from customer to sales order
+    /// </summary>
+    /// <param name="_custTable">Customer table record</param>
+    public void initFromCustTable(CustTable _custTable)
+    {
+        next initFromCustTable(_custTable);
+        
+        if (_custTable.BrokerId)
+        {
+            this.BrokerId = _custTable.BrokerId;
+        }
+    }
+    
+    /// <summary>
+    /// Initializes the sales order from sales agreement header
+    /// Copies the Broker ID from agreement to sales order
+    /// </summary>
+    /// <param name="_salesAgreementHeader">Sales agreement header record</param>
+    public void initFromSalesAgreementHeader(SalesAgreementHeader _salesAgreementHeader)
+    {
+        next initFromSalesAgreementHeader(_salesAgreementHeader);
+        
+        if (_salesAgreementHeader.BrokerId)
+        {
+            this.BrokerId = _salesAgreementHeader.BrokerId;
+        }
+    }
+    
+    /// <summary>
+    /// Validates the Broker ID field
+    /// </summary>
+    /// <returns>True if validation passes, false otherwise</returns>
+    public boolean validateWrite()
+    {
+        boolean ret = next validateWrite();
+        
+        if (ret)
+        {
+            ret = this.validateBrokerId();
+        }
+        
+        return ret;
+    }
+    
+    /// <summary>
+    /// Validates that the Broker ID exists in carrier table
+    /// </summary>
+    /// <returns>True if validation passes, false otherwise</returns>
+    private boolean validateBrokerId()
+    {
+        boolean ret = true;
+        
+        if (this.BrokerId)
+        {
+            TMSCarrier carrier = TMSCarrier::find(this.BrokerId);
+            
+            if (!carrier)
+            {
+                error(strFmt("@SCM0603:BrokerNotFound", this.BrokerId));
+                ret = false;
+            }
+        }
+        
+        return ret;
+    }
+}

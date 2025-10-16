@@ -1,6 +1,152 @@
-# PDF to Markdown Converter
+# Sales Order Customs Broker Tracking
+
+Complete implementation of Sales Order Customs Broker Tracking functionality for Microsoft Dynamics 365 Finance and Operations, developed for Leggett & Platt Automotive (LPA).
+
+## Project Overview
+
+This repository contains:
+1. **Dynamics 365 Implementation** - Complete customization artifacts (EDTs, table extensions, form extensions, business logic)
+2. **Comprehensive Documentation** - Deployment, configuration, testing, and user guides
+3. **Functional Design Document** - FDD SCM0603 V2.0 in Markdown format
+4. **PDF to Markdown Converter** - Utility tool for document conversion
+
+---
+
+## Quick Links
+
+### For Implementation
+- 📦 [Implementation Artifacts](Dynamics365/) - All D365 metadata and code
+- 📋 [Implementation Summary](IMPLEMENTATION_SUMMARY.md) - Complete overview of what's been implemented
+- 📖 [Deployment Guide](Dynamics365/Documentation/DEPLOYMENT_GUIDE.md) - Step-by-step deployment instructions
+- ⚙️ [Configuration Guide](Dynamics365/Documentation/CONFIGURATION_GUIDE.md) - System setup procedures
+- 🧪 [Test Validation Scripts](Dynamics365/Documentation/TEST_VALIDATION_SCRIPTS.md) - Comprehensive test cases
+- 👥 [User Training Guide](Dynamics365/Documentation/USER_TRAINING_GUIDE.md) - End-user documentation
+
+### For Reference
+- 📄 [Functional Design Document](FDD_SCM0603_Sales_Order_Customs_Broker_Tracking_V2.0.md) - Business requirements (FDD SCM0603 V2.0)
+
+---
+
+## What This Implementation Provides
+
+### Business Capabilities
+
+✅ **Customer Broker Management**
+- Assign customs broker to customer master records
+- Track broker information throughout sales process
+
+✅ **Automatic Data Flow**
+- Customer → Sales Agreement → Sales Order → Load → Packing Slip
+- Broker ID automatically defaults and transfers through the chain
+
+✅ **Flexibility**
+- Override broker on sales orders when needed
+- Optional field (not mandatory)
+- User-friendly lookup and validation
+
+✅ **Reporting & Tracking**
+- List page columns for broker filtering
+- Historical tracking on packing slips
+- Support for workspace tiles
+
+### Technical Components
+
+- **1 Extended Data Type (EDT)** - TMSBrokerId
+- **5 Table Extensions** - CustTable, SalesTable, SalesAgreementHeader, WHSLoadTable, CustPackingSlipJour
+- **5 Form Extensions** - Customer, Sales Order, Sales Agreement, Load, Packing Slip Journal
+- **5 Business Logic Classes** - Defaulting, validation, and transfer logic
+- **Complete Documentation** - Deployment, configuration, testing, training
+
+---
+
+## Getting Started
+
+### For Developers
+
+1. Review the [Implementation Summary](IMPLEMENTATION_SUMMARY.md)
+2. Read the [Technical Specification](Dynamics365/Documentation/TECHNICAL_SPECIFICATION.md)
+3. Follow the [Deployment Guide](Dynamics365/Documentation/DEPLOYMENT_GUIDE.md)
+4. Import artifacts from `Dynamics365/Metadata/` into your D365 project
+
+### For Administrators
+
+1. Review the [Configuration Guide](Dynamics365/Documentation/CONFIGURATION_GUIDE.md)
+2. Setup customs brokers in Shipping Carriers
+3. Configure security roles
+4. Run test validation scripts
+
+### For End Users
+
+1. Read the [User Training Guide](Dynamics365/Documentation/USER_TRAINING_GUIDE.md)
+2. Practice in test environment
+3. Attend training sessions
+
+---
+
+## Repository Structure
+
+```
+Sales-Order-Customs-Broker-Tracking/
+├── Dynamics365/                              # Main implementation
+│   ├── Metadata/                             # D365 artifacts
+│   │   ├── EDTs/                             # Extended Data Types
+│   │   ├── Tables/                           # Table extensions
+│   │   ├── Forms/                            # Form extensions
+│   │   └── Classes/                          # Business logic (X++)
+│   ├── Documentation/                        # Complete guides
+│   │   ├── DEPLOYMENT_GUIDE.md
+│   │   ├── CONFIGURATION_GUIDE.md
+│   │   ├── TECHNICAL_SPECIFICATION.md
+│   │   ├── TEST_VALIDATION_SCRIPTS.md
+│   │   └── USER_TRAINING_GUIDE.md
+│   └── README.md
+├── FDD_SCM0603_Sales_Order_Customs_Broker_Tracking_V2.0.md
+├── IMPLEMENTATION_SUMMARY.md
+├── README.md                                 # This file
+└── pdf2md.py                                 # PDF converter utility
+```
+
+---
+
+## Implementation Status
+
+✅ **COMPLETE** - All components implemented per FDD SCM0603 V2.0
+
+- ✅ Extended Data Type (TMSBrokerId)
+- ✅ All table extensions created
+- ✅ All form extensions created
+- ✅ All business logic classes implemented
+- ✅ Deployment guide completed
+- ✅ Configuration guide completed
+- ✅ Technical specification completed
+- ✅ Test validation scripts completed
+- ✅ User training guide completed
+
+---
+
+## Technology Stack
+
+- **Platform:** Microsoft Dynamics 365 Finance and Operations
+- **Language:** X++ (business logic)
+- **Metadata:** XML (extensions)
+- **Architecture:** Extension-based (no overlayering)
+
+---
+
+## Support
+
+For questions or issues:
+- Review documentation in `Dynamics365/Documentation/`
+- Contact your Dynamics 365 administrator
+- Reference FDD SCM0603 V2.0 for business requirements
+
+---
+
+# PDF to Markdown Converter (Utility Tool)
 
 A robust Python script that converts PDF documents into clean, structured Markdown files with support for text extraction, table formatting, and image extraction.
+
+**Note:** This utility was used to convert the FDD documents to Markdown format.
 
 ## Features
 

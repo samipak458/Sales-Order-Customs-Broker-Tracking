@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxTableExtension xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>WHSLoadTable_Extension</Name>
+  <TargetTable>WHSLoadTable</TargetTable>
+  <Fields>
+    <AxTableField>
+      <Name>BrokerId</Name>
+      <ExtendedDataType>TMSBrokerId</ExtendedDataType>
+      <Label>Broker ID</Label>
+      <HelpText>Customs broker assigned to this load</HelpText>
+      <Mandatory>No</Mandatory>
+      <AllowEdit>Yes</AllowEdit>
+      <AllowEditOnCreate>Yes</AllowEditOnCreate>
+    </AxTableField>
+  </Fields>
+  <Relations>
+    <AxTableRelation>
+      <Name>TMSCarrier</Name>
+      <Cardinality>ZeroOne</Cardinality>
+      <RelatedTable>TMSCarrier</RelatedTable>
+      <RelatedTableCardinality>ZeroOne</RelatedTableCardinality>
+      <RelationshipType>Association</RelationshipType>
+      <Constraints>
+        <AxTableRelationConstraint>
+          <Name>BrokerId</Name>
+          <SourceEDT>TMSBrokerId</SourceEDT>
+          <Field>BrokerId</Field>
+          <RelatedField>ShipCarrierId</RelatedField>
+        </AxTableRelationConstraint>
+      </Constraints>
+    </AxTableRelation>
+  </Relations>
+</AxTableExtension>
