@@ -14,10 +14,6 @@
 
 **Contributors:** Lacey Burnette, Andrew Jinks
 
-![Image](images/image1.png)
-
-![Image](images/image2.png)
-
 ---
 
 ## Revision History and Signoff Sheet
@@ -72,8 +68,6 @@
    - 8.1 [Test Cases](#81-test-cases)
 9. [Appendices](#9-appendices)
 
-![Image](images/image3.png)
-
 ---
 
 ## 1 Introduction
@@ -93,10 +87,9 @@ The Functional Design Document will cover the following design topics:
 | Section 5.3 | Modifications to Business Logic to support the functional design |
 | Section 5.4 | Modifications to List Pages to support the functional design |
 | Section 6 | Configurations and Security Considerations |
-| Section 7 | Error Handling |
-| Section 8 | Test Cases |
+| Section 7 | Test Cases to validate the modifications to support the functional design |
+| Section 8 | Appendix for supporting information and templates related to the functional design |
 
-This section is not applicable for this FDD.
 
 ### 1.2 Abbreviations and Glossary of Terms
 
@@ -110,9 +103,11 @@ This section is not applicable for this FDD.
 
 | Data Type | Description |
 |:----------|:------------|
+| Action Pane | An action pane is the part of a form that organizes and displays buttons that represent the actions the form supports. |
+| List Pages | The list page presents the primary data of the application on a user interface that is optimized for browsing records, finding the right one, and then taking an action upon that record. The list page lets the user search, filter, sort, and preview the data.|
+| Navigation Path | The standard navigation window presents the user with a module navigation control.  This will indicate where the forms, list pages or periodic jobs are stored and how to navigate within D365. |
 | String | Used for Text fields |
-| Enum | Used for fields that will have Options to select from, for example the field Type can have values like Customer, Vendor |
-| EDT | Extended Data Type - Used for String fields that will point to data reference table, for example the field Delivery Terms is sourced from the table "DeliveryTerms" |
+| Data Source | Used for String fields that will point to data reference table, for example the field Delivery Terms is sourced from the table "DeliveryTerms" |
 | Boolean | Yes or No value |
 | Real | Used to indicate a Number or Currency field |
 
@@ -169,18 +164,19 @@ The following design assumptions have been made as part of this FDD:
 | S. No. | Title |
 |:-------|:------|
 | 1. | The Broker ID field is a look-up field on the shipping carrier table in Standard D365. It is assumed that Custom Brokers would be set up in the same table as shipping carriers. This assumption has been verified by LPA SME's and the BA. |
-| 2. | The Shipping Carriers table will be used for maintaining both the carriers and customs brokers. The existing D365 field called 'Type' will be used to identify if the record is a Shipping Carrier vs Customs Broker. |
+| 2. | The Shipping Carriers table will be used for maintaining both the carriers and customs brokers, and this applies to both the sales and purchasing side. |
+| 3. | In case of ISV (ATOS), the ISV solution will have to use the additional logic to ensure customs broker field is utilized on relevant EDI transactions. This is outside the scope of this design document, but it needs to be done during the ISV Design/Build phase.  An issue has been logged in VSTS regarding the same. |
+| 4. | When a Sales Order is “released to warehouse” and an outbound shipping wave is created, the system requires the user to specify the Broker ID field manually on the outbound load. This is standard D365 functionality, and no change has been proposed to Transportation Management (in case we use loads and shipments in D365). |
+| 5. | Customs Brokers and Shipping Carriers will be maintained at each branch level (i.e. at a legal entity level in D365).| 
+| 6. | The Broker ID field is not mandatory on the Customer Master, Sales Agreement, or Sales Order forms in D365.  |
 
 ### 3.2 Business Rules
 
 | S. No. | Business Rule |
 |:-------|:--------------|
-| 1. | The Broker ID field is a required field only when the customer is flagged as an Export customer. |
-| 2. | The customer form will include a new field called Broker ID which would be a lookup to the shipping carrier table where the Type = 'Customs Broker'. |
-| 3. | The Broker ID on the customer record will default to the sales order. |
-| 4. | The sales order will allow override of the Broker ID field. |
-| 5. | When the sales order is confirmed, the Broker ID from the sales order will be stored on the load record. |
-| 6. | The Broker ID from the Load will be displayed on the packing slip. |
+| 1. | The Broker ID field should copy over from the Customer form to the Sales Agreement form when a Sales Agreement is created for a Customer. It should then further copy over from the Sales Agreement form to the resultant Sales Order when a release sales order gets created in D365.  |
+| 2. | If no sales agreements exist or are not created for a customer, but sales orders are being created directly, the system should still copy the customs broker field from the customer to the sales order. |
+| 3. | In D365, the Shipping Carrier table/form is in the Inventory Management Module, so from a data setup perspective the same needs to be configured in the Inventory Management Module. Please refer to the configuration section below in this document. |
 
 ---
 
