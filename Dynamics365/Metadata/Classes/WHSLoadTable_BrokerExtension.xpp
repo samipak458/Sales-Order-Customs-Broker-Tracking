@@ -1,0 +1,59 @@
+/// <summary>
+/// Extension class for WHSLoadTable to handle Broker ID business logic
+/// </summary>
+[ExtensionOf(tableStr(WHSLoadTable))]
+final class WHSLoadTable_BrokerExtension
+{
+    /// <summary>
+    /// Initializes the load from sales order
+    /// Copies the Broker ID from sales order to load
+    /// </summary>
+    /// <param name="_salesTable">Sales table record</param>
+    public void initFromSalesTable(SalesTable _salesTable)
+    {
+        next initFromSalesTable(_salesTable);
+        
+        if (_salesTable.BrokerId)
+        {
+            this.BrokerId = _salesTable.BrokerId;
+        }
+    }
+    
+    /// <summary>
+    /// Validates the Broker ID field
+    /// </summary>
+    /// <returns>True if validation passes, false otherwise</returns>
+    public boolean validateWrite()
+    {
+        boolean ret = next validateWrite();
+        
+        if (ret)
+        {
+            ret = this.validateBrokerId();
+        }
+        
+        return ret;
+    }
+    
+    /// <summary>
+    /// Validates that the Broker ID exists in carrier table
+    /// </summary>
+    /// <returns>True if validation passes, false otherwise</returns>
+    private boolean validateBrokerId()
+    {
+        boolean ret = true;
+        
+        if (this.BrokerId)
+        {
+            TMSCarrier carrier = TMSCarrier::find(this.BrokerId);
+            
+            if (!carrier)
+            {
+                error(strFmt("@SCM0603:BrokerNotFound", this.BrokerId));
+                ret = false;
+            }
+        }
+        
+        return ret;
+    }
+}

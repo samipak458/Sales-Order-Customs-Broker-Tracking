@@ -1,0 +1,48 @@
+/// <summary>
+/// Extension class for CustTable to handle Broker ID business logic
+/// </summary>
+[ExtensionOf(tableStr(CustTable))]
+final class CustTable_BrokerExtension
+{
+    /// <summary>
+    /// Validates the Broker ID field based on business rules
+    /// </summary>
+    /// <returns>True if validation passes, false otherwise</returns>
+    public boolean validateWrite()
+    {
+        boolean ret = next validateWrite();
+        
+        if (ret)
+        {
+            ret = this.validateBrokerId();
+        }
+        
+        return ret;
+    }
+    
+    /// <summary>
+    /// Validates the Broker ID based on customer export status
+    /// </summary>
+    /// <returns>True if validation passes, false otherwise</returns>
+    private boolean validateBrokerId()
+    {
+        boolean ret = true;
+        
+        // Note: Broker ID is not mandatory per FDD assumptions section 3.1, item 6
+        // This validation can be enhanced if business rules change
+        
+        if (this.BrokerId)
+        {
+            // Validate that the selected broker exists in TMSCarrier
+            TMSCarrier carrier = TMSCarrier::find(this.BrokerId);
+            
+            if (!carrier)
+            {
+                error(strFmt("@SCM0603:BrokerNotFound", this.BrokerId));
+                ret = false;
+            }
+        }
+        
+        return ret;
+    }
+}

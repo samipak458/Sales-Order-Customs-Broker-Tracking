@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxEdt xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>TMSBrokerId</Name>
+  <Extends>TMSShipCarrierId</Extends>
+  <Label>Broker ID</Label>
+  <HelpText>Customs broker identification</HelpText>
+  <FormHelp>Customs broker assigned to handle customs clearance</FormHelp>
+  <ReferenceTable>TMSCarrier</ReferenceTable>
+  <TableRelation>
+    <RelatedTable>TMSCarrier</RelatedTable>
+    <RelatedTableCardinality>ZeroOne</RelatedTableCardinality>
+    <Validate>Yes</Validate>
+  </TableRelation>
+</AxEdt>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AxFormExtension xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>CustPackingSlipJour_Extension</Name>
+  <TargetForm>CustPackingSlipJour</TargetForm>
+  <Design>
+    <Pattern>ListPage</Pattern>
+    <PatternVersion>1.0</PatternVersion>
+    <Controls>
+      <AxFormControl>
+        <Name>BrokerId</Name>
+        <Type>String</Type>
+        <FormControlExtension>
+          <Name>BrokerId</Name>
+          <ExtendedControl>MainGrid</ExtendedControl>
+          <Controls>
+            <AxFormControl>
+              <Name>BrokerId</Name>
+              <Type>String</Type>
+              <DataSource>CustPackingSlipJour</DataSource>
+              <DataField>BrokerId</DataField>
+              <Label>Broker ID</Label>
+              <AllowEdit>No</AllowEdit>
+            </AxFormControl>
+          </Controls>
+        </FormControlExtension>
+      </AxFormControl>
+    </Controls>
+  </Design>
+  <DataSources>
+    <AxFormDataSourceExtension>
+      <Name>CustPackingSlipJour</Name>
+      <DataSourceName>CustPackingSlipJour</DataSourceName>
+      <Fields>
+        <AxFormDataSourceField>
+          <Name>BrokerId</Name>
+          <DataField>BrokerId</DataField>
+          <AllowEdit>No</AllowEdit>
+        </AxFormDataSourceField>
+      </Fields>
+    </AxFormDataSourceExtension>
+  </DataSources>
+</AxFormExtension>

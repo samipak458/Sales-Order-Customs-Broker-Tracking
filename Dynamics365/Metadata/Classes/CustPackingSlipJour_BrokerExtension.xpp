@@ -1,0 +1,36 @@
+/// <summary>
+/// Extension class for CustPackingSlipJour to handle Broker ID business logic
+/// </summary>
+[ExtensionOf(tableStr(CustPackingSlipJour))]
+final class CustPackingSlipJour_BrokerExtension
+{
+    /// <summary>
+    /// Initializes the packing slip journal from sales order
+    /// Copies the Broker ID from sales order to packing slip
+    /// </summary>
+    /// <param name="_salesTable">Sales table record</param>
+    public void initFromSalesTable(SalesTable _salesTable)
+    {
+        next initFromSalesTable(_salesTable);
+        
+        if (_salesTable.BrokerId)
+        {
+            this.BrokerId = _salesTable.BrokerId;
+        }
+    }
+    
+    /// <summary>
+    /// Initializes the packing slip journal from load
+    /// Copies the Broker ID from load to packing slip
+    /// </summary>
+    /// <param name="_whsLoadTable">Load table record</param>
+    public void initFromWHSLoadTable(WHSLoadTable _whsLoadTable)
+    {
+        next initFromWHSLoadTable(_whsLoadTable);
+        
+        if (_whsLoadTable.BrokerId)
+        {
+            this.BrokerId = _whsLoadTable.BrokerId;
+        }
+    }
+}
